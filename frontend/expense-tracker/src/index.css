@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Monda:wght@400..700&family=Outfit:wght@100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+@import "tailwindcss";
+
+@theme{
+    --font-display:"Monda", "sans-serif";
+    --breakpoint-3xl: 1920px;
+    --color-primary: #2563eb;
+     /* #87cf5; */
+}
+
+@layer base {
+    html{
+        font-family:var(--font-display);
+    }
+
+    body{
+        background-color: #fcfbfc;
+        overflow-x: hidden;
+    }
+}
+
