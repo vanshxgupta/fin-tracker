@@ -45,7 +45,7 @@ exports.getAllExpense = async (req, res) => {
 exports.deleteExpense = async (req, res) => {
     try {
         await Expense.findByIdAndDelete(req.params.id)
-        res.json({ message: "income deleted successfully" })
+        res.json({ message: "Expense deleted successfully" })
     } catch (err) {
         res.status(500).json({ message: "server error", error: err.message })
     }
