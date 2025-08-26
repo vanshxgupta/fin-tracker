@@ -1,5 +1,5 @@
-const express = require("express")
-const { protect } = require("../middlewares/authMiddleware.js")
+const express = require("express");
+const { protect } = require("../middlewares/authMiddleware.js");
 const upload = require("../middlewares/uploadMiddleware.js");
 
 const {
@@ -13,13 +13,20 @@ const router = express.Router();
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/getUser", protect, getUserInfo);
-router.post("/upload-image", upload.single("image"), (req, res)=>{
+
+// ✅ Cloudinary upload route
+router.post("/upload-image", upload.single("image"), (req, res) => {
     if (!req.file) {
-        return res.status(409).json({message: "no file uploaded"})
+        return res.status(400).json({ message: "No file uploaded" });
     }
-    const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`
 
-    res.status(200).json({imageUrl})
-})
+    // Cloudinary gives the hosted URL in req.file.path
+    const imageUrl = req.file.path;
 
-module.exports = router
+    res.status(200).json({
+        message: "Image uploaded successfully",
+        imageUrl
+    });
+});
+
+module.exports = router;
