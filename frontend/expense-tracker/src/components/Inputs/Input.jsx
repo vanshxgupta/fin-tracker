@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LuEye, LuEyeClosed } from 'react-icons/lu';
 
-const Input = ({ value, onChange, label, placeholder, type }) => {
+const Input = ({ value, onChange, label, placeholder, type,name }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const toggleShowPassword = () => {
@@ -22,16 +22,16 @@ const Input = ({ value, onChange, label, placeholder, type }) => {
           placeholder={placeholder}
           value={value}
           onChange={(e) => onChange(e)}
-          className="w-full bg-transparent outline-none text-gray-900 dark:text-white placeholder-gray-400"
+          className="w-full bg-transparent outline-none text-gray-900 dark:text-black placeholder-gray-400"
         />
 
         {type === "password" && (
           <button
             type="button"
             onClick={toggleShowPassword}
-            className="ml-2 text-black hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none"
+            className="ml-2 text-black hover:text-gray-950 dark:hover:text-black focus:outline-none"
           >
-            {showPassword ? <LuEyeClosed size={18} /> : <LuEye size={18} />}
+            {showPassword ? <LuEyeClosed size={20} /> : <LuEye size={20} />}
           </button>
         )}
       </div>

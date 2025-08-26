@@ -1,73 +1,109 @@
-import React from 'react';
+import React, { useContext, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import AuthLayout from '../../components/layouts/AuthLayout'
+import Input from '../../components/Inputs/Input';
+import { validEmail } from '../../utils/helper';
+import ProfilePhotoSelector from '../../components/Inputs/ProfilePhotoSelector';
+// import axiosInstance from '../../utils/axiosInstance';
+// import { API_PATH } from '../../utils/apiPath';
+// import { UserContext } from '../../context/userContext';
+// import uploadImage from '../../utils/uploadImage';
+
 
 const SignUp = () => {
+
+  const navigate = useNavigate();
+
+  const [profilePic, setProfilePic] = useState("")
+  const [fullName, setFullName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+
+  const [error, setError] = useState(null)
+
+  // const { updateUser } = useContext(UserContext)
+
+  const handleSignUp = async (e) => {
+    e.preventDefault()
+
+    let profileImageUrl = ""
+
+    if (!fullName) {
+      setError("Enter your full name")
+      return
+    }
+    if (!validEmail(email)) {
+      setError("enter valid emailId")
+      return
+    }
+
+    if (!password) {
+      setError("enter password")
+      return
+    }
+
+    setError("")
+
+    // SignUp API call
+  }
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold text-center text-gray-900">
-          Create an account
-        </h2>
-        <form className="space-y-6">
-          <div>
-            <label htmlFor="full-name" className="block text-sm font-medium text-gray-700">
-              Full Name
-            </label>
-            <div className="mt-1">
-              <input
-                id="full-name"
-                name="full-name"
-                type="text"
-                autoComplete="name"
-                required
-                className="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
-            </div>
-          </div>
+    <AuthLayout>
+      <div className='flex items-center justify-center w-full h-full'>
+        <div className='w-full max-w-2xl bg-white p-10 rounded-2xl shadow-lg'>
+          <h3 className='text-2xl font-semibold text-black text-center'>
+            Create New Account
+          </h3>
+          <p className='text-[14px] text-slate-700 mt-2 mb-8 text-center'>
+            Join us today by entering your details below.
+          </p>
 
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email address
-            </label>
-            <div className="mt-1">
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
-            </div>
-          </div>
+          <form onSubmit={handleSignUp} className="flex flex-col gap-5">
 
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-              Password
-            </label>
-            <div className="mt-1">
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="new-password"
-                required
-                className="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
+            <div className="flex justify-center">
+              <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
             </div>
-          </div>
 
-          <div>
-            <button
-              type="submit"
-              className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Sign up
+            {/* Name and email stacked vertically */}
+            <Input
+              type="text"
+              value={fullName}
+              onChange={({ target }) => setFullName(target.value)}
+              label="Full name"
+              placeholder="Vansh Gupta"
+            />
+
+            <Input
+              type="text"
+              value={email}
+              onChange={({ target }) => setEmail(target.value)}
+              label="Email Address"
+              placeholder='vansh@gmail.com'
+            />
+
+            <Input
+              type="password"
+              value={password}
+              onChange={({ target }) => setPassword(target.value)}
+              label="Password"
+              placeholder='••••••••'
+            />
+
+            {error && <p className='text-red-500 text-xs'>{error}</p>}
+
+            <button type='submit' className='btn-primary cursor-pointer w-full text-lg py-3'>
+              SIGN UP
             </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
-};
 
-export default SignUp;
+            <p className='text-[14px] text-slate-800 text-center mt-4'>
+              Already have an account?
+              <Link className='font-medium text-primary underline' to="/login"> Login</Link>
+            </p>
+          </form>
+        </div>
+      </div>
+    </AuthLayout>
+  )
+}
+
+export default SignUp
