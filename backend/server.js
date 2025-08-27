@@ -1,4 +1,12 @@
 require("dotenv").config()
+
+console.log("ENV CHECK:", {
+  MONGO_URI: !!process.env.MONGO_URI,
+  JWT_SECRET: !!process.env.JWT_SECRET,
+  CLIENT_URL: process.env.CLIENT_URL,
+});
+
+
 const cors = require("cors")
 const path = require("path")
 
