@@ -1,11 +1,11 @@
 import React from 'react'
-import Login from './pages/auth/Login';
-import SignUp from './pages/auth/SignUp';
-import Home from './pages/Dashboard/Home';
-import Income from './pages/Dashboard/Income';
-import Expense from './pages/Dashboard/Expense';
-import UserProvider from './context/userContext';
-import {Toaster} from "react-hot-toast"
+import Login from './pages/auth/Login.jsx';
+import SignUp from './pages/auth/SignUp.jsx';
+import Home from './pages/Dashboard/Home.jsx';
+import Income from './pages/Dashboard/Income.jsx';
+import Expense from './pages/Dashboard/Expense.jsx';
+import UserProvider from './context/userContext.jsx';
+import { Toaster } from "react-hot-toast";
 
 import {
   BrowserRouter as Router,
@@ -53,16 +53,3 @@ const Root = () => {
 }
 
 export default App
-
-
-// Router (or BrowserRouter)
-// Wraps your entire app.
-// Enables client-side routing (changing pages without refreshing).
-// Tracks the URL in the address bar and shows the correct page/component.
-
-// Routes
-// A container for all your Routes.
-// Think of it as a switchboard: it reads the current URL and matches it to a Route.
-
-// Route
-// Defines a URL path and which component should render when that path is visited.
