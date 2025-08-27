@@ -1,27 +1,24 @@
 import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import AuthLayout from '../../components/layouts/AuthLayout'
-import Input from '../../components/Inputs/Input';
+import Input from '../../components/inputs/Input';
 import { validEmail } from '../../utils/helper';
-import ProfilePhotoSelector from '../../components/Inputs/ProfilePhotoSelector';
-// import axiosInstance from '../../utils/axiosInstance';
-// import { API_PATH } from '../../utils/apiPath';
-// import { UserContext } from '../../context/userContext';
-// import uploadImage from '../../utils/uploadImage';
-
+import ProfilePhotoSelector from '../../components/inputs/ProfilePhotoSelector';
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATH } from '../../utils/apiPath';
+import { UserContext } from '../../context/userContext';
+import uploadImage from '../../utils/uploadImage';
 
 const SignUp = () => {
-
   const navigate = useNavigate();
 
   const [profilePic, setProfilePic] = useState("")
   const [fullName, setFullName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-
   const [error, setError] = useState(null)
 
-  // const { updateUser } = useContext(UserContext)
+  const { updateUser } = useContext(UserContext)
 
   const handleSignUp = async (e) => {
     e.preventDefault()
@@ -33,44 +30,67 @@ const SignUp = () => {
       return
     }
     if (!validEmail(email)) {
-      setError("enter valid emailId")
+      setError("Enter a valid email")
       return
     }
-
     if (!password) {
-      setError("enter password")
+      setError("Enter password")
       return
     }
 
     setError("")
 
-    // SignUp API call
+    try {
+      if (profilePic) {
+        const imgUploadRes = await uploadImage(profilePic)
+        profileImageUrl = imgUploadRes.imageUrl || "";
+      }
+
+      const response = await axiosInstance.post(API_PATH.AUTH.REGISTER, {
+        fullName,
+        email,
+        password,
+        profileImageUrl,
+      });
+
+      const { token, user } = response.data;
+
+      if (token) {
+        localStorage.setItem("token", token);
+        updateUser(user)
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message)
+      } else {
+        setError(error.message)
+      }
+    }
   }
 
   return (
     <AuthLayout>
-      <div className='flex items-center justify-center w-full h-full'>
-        <div className='w-full max-w-2xl bg-white p-10 rounded-2xl shadow-lg'>
-          <h3 className='text-2xl font-semibold text-black text-center'>
+      <div className="flex flex-col items-center justify-center h-full w-full">
+        <div className="w-full max-w-md">
+          <h3 className='text-2xl font-bold text-center text-black mb-2'>
             Create New Account
           </h3>
-          <p className='text-[14px] text-slate-700 mt-2 mb-8 text-center'>
+          <p className='text-sm text-center text-slate-600 mb-6'>
             Join us today by entering your details below.
           </p>
 
-          <form onSubmit={handleSignUp} className="flex flex-col gap-5">
-
+          <form onSubmit={handleSignUp} className="space-y-5">
             <div className="flex justify-center">
               <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
             </div>
 
-            {/* Name and email stacked vertically */}
             <Input
               type="text"
               value={fullName}
               onChange={({ target }) => setFullName(target.value)}
               label="Full name"
-              placeholder="Vansh Gupta"
+              placeholder="Enter your name"
             />
 
             <Input
@@ -78,7 +98,7 @@ const SignUp = () => {
               value={email}
               onChange={({ target }) => setEmail(target.value)}
               label="Email Address"
-              placeholder='vansh@gmail.com'
+              placeholder="Enter your email"
             />
 
             <Input
@@ -86,18 +106,23 @@ const SignUp = () => {
               value={password}
               onChange={({ target }) => setPassword(target.value)}
               label="Password"
-              placeholder='••••••••'
+              placeholder="Enter password"
             />
 
-            {error && <p className='text-red-500 text-xs'>{error}</p>}
+            {error && <p className='text-red-500 text-sm'>{error}</p>}
 
-            <button type='submit' className='btn-primary cursor-pointer w-full text-lg py-3'>
+            <button
+              type='submit'
+              className='w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2.5 rounded-xl transition duration-200'
+            >
               SIGN UP
             </button>
 
-            <p className='text-[14px] text-slate-800 text-center mt-4'>
+            <p className='text-sm text-center text-slate-800'>
               Already have an account?
-              <Link className='font-medium text-primary underline' to="/login"> Login</Link>
+              <Link className='ml-1 font-medium text-purple-600 hover:underline' to="/login">
+                Login
+              </Link>
             </p>
           </form>
         </div>
