@@ -1,7 +1,7 @@
+// backend/middlewares/uploadMiddleware.js
 const multer = require("multer");
-const cloudinary = require("cloudinary").v2;
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
-require("dotenv").config(); // make sure .env works
+const cloudinary = require("cloudinary").v2;
 
 // Cloudinary config
 cloudinary.config({
@@ -10,12 +10,13 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// Setup storage
+// storage config
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: "finance-tracker", // folder name inside Cloudinary
-    allowed_formats: ["jpg", "png", "jpeg"], // allowed file types
+    folder: "uploads", // Cloudinary folder name
+    allowed_formats: ["jpeg", "png", "jpg"], 
+    public_id: (req, file) => `${Date.now()}-${file.originalname}`,
   },
 });
 
