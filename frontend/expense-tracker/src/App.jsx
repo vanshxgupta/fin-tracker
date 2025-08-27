@@ -1,4 +1,11 @@
 import React from 'react'
+import Login from './pages/auth/Login';
+import SignUp from './pages/auth/SignUp';
+import Home from './pages/Dashboard/Home';
+import Income from './pages/Dashboard/Income';
+import Expense from './pages/Dashboard/Expense';
+import UserProvider from './context/userContext';
+import {Toaster} from "react-hot-toast"
 
 import {
   BrowserRouter as Router,
@@ -7,13 +14,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import Login from "../src/pages/auth/Login";
-import SignUp from "../src/pages/auth/SignUp";
-import Home from "../src/pages/Dashboard/Home";
-import Income from "../src/pages/Dashboard/Income";
-import Expense from "../src/pages/Dashboard/Expense";
-import UserProvider from './context/userContext';
-import {Toaster} from "react-hot-toast"
+
 
 const App = () => {
   return (
@@ -22,7 +23,7 @@ const App = () => {
         <Router>
           <Routes>
             <Route path="/" element={<Root />} />
-            <Route path="/login" exact element={<Login />} />
+            <Route path="/login" exact element={<Login/>}/>
             <Route path="/signUp" exact element={<SignUp />} />
             <Route path="/dashboard" exact element={<Home />} />
             <Route path="/income" exact element={<Income />} />
