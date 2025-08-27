@@ -1,42 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import { LuEye, LuEyeClosed } from 'react-icons/lu';
+import React, { useState } from 'react'
 
-const Input = ({ value, onChange, label, placeholder, type,name }) => {
-  const [showPassword, setShowPassword] = useState(false);
+const Input = ({ value, onChange, label, placeholder, type }) => {
 
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
+    const [showPassword, setShowPassword] = useState(false);
+    const toggleShowPassword = () => {
+        setShowPassword(!showPassword)
+    }
 
-  return (
-    <div className="mb-4 w-full">
-      {/* Label */}
-      <label className="block text-sm font-medium text-black dark:text-black mb-1.5">
-        {label}
-      </label>
+    return (
+        <div>
+            <label className='text-[13px] text-slate-800 dark:text-black'>{label}</label>
 
-      {/* Input Box */}
-      <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white focus-within:ring-2 focus-within:ring-primary transition">
-        <input
-          type={type === "password" ? (showPassword ? "text" : "password") : type}
-          placeholder={placeholder}
-          value={value}
-          onChange={(e) => onChange(e)}
-          className="w-full bg-transparent outline-none text-gray-900 dark:text-black placeholder-gray-400"
-        />
+            <div className='input-box'>
+                <input
+                    type={type == 'password' ? showPassword ? 'text' : 'password' : type}
+                    placeholder={placeholder}
+                    value={value}
+                    onChange={(e) => onChange(e)}
+                    className='w-full bg-transparent outline-none'
+                />
+                {type === 'password' && (
+                    <button type="button" onClick={toggleShowPassword}>
+                        {showPassword ? 'Hide' : 'Show'}
+                    </button>
+                )}
 
-        {type === "password" && (
-          <button
-            type="button"
-            onClick={toggleShowPassword}
-            className="ml-2 text-black hover:text-gray-950 dark:hover:text-black focus:outline-none"
-          >
-            {showPassword ? <LuEyeClosed size={20} /> : <LuEye size={20} />}
-          </button>
-        )}
-      </div>
-    </div>
-  );
-};
+                {/* If type is 'password', the expression inside (...) will be rendered.
+                If not, React will skip rendering this part. */}
 
-export default Input;
+            </div>
+
+        </div>
+    )
+}
+
+export default Input

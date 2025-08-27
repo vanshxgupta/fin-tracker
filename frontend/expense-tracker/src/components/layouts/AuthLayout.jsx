@@ -7,8 +7,8 @@ const AuthLayout = ({ children }) => {
     <div className='flex'>
       <div className="w-screen h-screen md:w-[60vw] px-12 pt-8 pb-12 ">
         <span className='flex flex-row'>
-          <h2 className='text-2xl font-semibold text-black'>Track</h2>
-          <h2 className='text-2xl font-semibold text-purple-700'>Expense</h2>
+          <h2 className='text-2xl font-semibold text-black'>Fin</h2>
+          <h2 className='text-2xl font-semibold text-purple-700'>Track</h2>
         </span>
         {children}
       </div>
