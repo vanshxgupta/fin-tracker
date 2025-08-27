@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import AuthLayout from '../../components/layouts/AuthLayout'
-import Input from '../../components/inputs/Input';
-import { validEmail } from '../../utils/helper';
+import AuthLayout from '../../components/layouts/AuthLayout.jsx'
+import Input from '../../components/inputs/Input.jsx';
+import { validEmail } from '../../utils/helper.js';
 import axiosInstance from "../../utils/axiosInstance.js"
 import { API_PATH } from '../../utils/apiPath.js';
 import { UserContext } from '../../context/userContext.jsx';
