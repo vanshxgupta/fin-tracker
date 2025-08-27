@@ -106,3 +106,5 @@ ehthumbs.db
 # Build outputs
 dist/
 build/ 
+
+.repomix*
